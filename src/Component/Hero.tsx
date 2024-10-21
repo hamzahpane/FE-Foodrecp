@@ -1,9 +1,6 @@
 import { useState, useEffect } from "react";
 import gambar from "../assets/Hero (2).jpg";
-import {
-  useAppDispatch,
-  useAppSelector,
-} from "./Redux/Store/Hooks/productHook";
+import { useAppDispatch } from "./Redux/Store/Hooks/productHook";
 import {
   fetchRecipes,
   setSearchName,
@@ -11,16 +8,12 @@ import {
 
 const Hero = () => {
   const dispatch = useAppDispatch();
-  const searchName = useAppSelector((state) => state.ricepes.search_name);
-  const [searchInput, setSearchInput] = useState(searchName);
+  // const searchName = useAppSelector((state) => state.ricepes.search_name);
+  const [searchInput, setSearchInput] = useState<string>("");
 
   useEffect(() => {
     dispatch(fetchRecipes(searchInput));
   }, [dispatch, searchInput]);
-
-  const handleSearch = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setSearchInput(e.target.value);
-  };
 
   const handleSubmit = () => {
     dispatch(setSearchName(searchInput));
@@ -43,7 +36,7 @@ const Hero = () => {
           <input
             type="text"
             value={searchInput}
-            onChange={handleSearch}
+            onChange={(e) => setSearchInput(e.target.value)}
             placeholder="Search recipes..."
             className="flex-grow p-1 border-none focus:outline-none"
           />

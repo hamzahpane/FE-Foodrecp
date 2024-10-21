@@ -1,9 +1,9 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import {
   useAppDispatch,
   useAppSelector,
 } from "./Redux/Store/Hooks/productHook";
-import { fetchRecipes, setPage } from "./Redux/Store/features/prodcutSilce";
+import { setPage } from "./Redux/Store/features/prodcutSilce";
 import Tags from "./Tags";
 import { Link } from "react-router-dom";
 
@@ -14,14 +14,7 @@ const RecipeList = () => {
   const error = useAppSelector((state) => state.ricepes.error);
   const currentPage = useAppSelector((state) => state.ricepes.currentPage);
   const pageSize = useAppSelector((state) => state.ricepes.pageSize);
-  const search_name = useAppSelector((state) => state.ricepes.search_name);
   const [selectedTag, setSelectedTag] = useState<string | null>(null);
-
-  useEffect(() => {
-    if (recipesStatus === "idle" || search_name) {
-      dispatch(fetchRecipes(search_name));
-    }
-  }, [recipesStatus, search_name, dispatch]);
 
   const filteredRecipes = selectedTag
     ? recipes.filter((recipe) => recipe.tags.includes(selectedTag))
@@ -30,7 +23,7 @@ const RecipeList = () => {
   const startIndex = (currentPage - 1) * pageSize;
   const endIndex = startIndex + pageSize;
   const displayRecipes = filteredRecipes.slice(startIndex, endIndex);
-
+  console.log(displayRecipes);
   if (recipesStatus === "loading") {
     return <div className="text-center">Loading recipes...</div>;
   } else if (recipesStatus === "failed") {

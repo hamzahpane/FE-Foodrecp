@@ -41,11 +41,11 @@ export const fetchTags = createAsyncThunk<string[]>(
 
 export const fetchRecipes = createAsyncThunk<Recipe[], string>(
   "recipes/fetchRecipes",
-  async (search_name) => {
+  async (searchName) => {
     const response = await axios.get(
-      `https://dummyjson.com/recipes/search?q=${search_name}`
+      `https://dummyjson.com/recipes/search?q=${searchName}`
     );
-    console.log(response.data); // Tambahkan ini untuk melihat data respons
+    // console.log(response.data); // Tambahkan ini untuk melihat data respons
     return response.data.recipes; // Pastikan format data sesuai
   }
 );
